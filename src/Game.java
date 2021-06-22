@@ -18,8 +18,7 @@ public class Game extends JFrame {
         JOptionPane.showMessageDialog(instruction, "#Game purpose:" +
                 "\nTo win this game you need to kill all the enemies or avoid them and their rockets \n#" +
                 "Rules: \n" +
-                "1.Use arrow keyboard(Upwards & Downwards Arrows)\n2.You can not get out of the screen" +
-                "\n2.Use space bar to shoot the enemies");
+                "1.Use arrow keyboard(Upwards & Downwards Arrows)\n2.Use space bar to shoot the enemies");
 
     }
 
