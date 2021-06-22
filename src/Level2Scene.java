@@ -57,4 +57,21 @@ public class Level2Scene extends DefaultScene {
         return false;
 
     }
+
+    public EnemySpaceship getEnemySpaceship2() {
+        return enemySpaceship2;
+    }
+
+    public void setEnemySpaceship2(EnemySpaceship enemySpaceship2) {
+        this.enemySpaceship2 = enemySpaceship2;
+    }
+
+    public EnemySpaceship getEnemySpaceship3() {
+        return enemySpaceship3;
+    }
+
+    public void setEnemySpaceship3(EnemySpaceship enemySpaceship3) {
+        this.enemySpaceship3 = enemySpaceship3;
+    }
+
 }

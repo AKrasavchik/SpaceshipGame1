@@ -14,6 +14,7 @@ public class GameScene extends JPanel {
     private MenuScene menuScene;
     private LosingScene losingScene;
     private PlayerFire[] playerFires;
+    private WinningScene winningScene;
 
 
 
@@ -38,6 +39,7 @@ public class GameScene extends JPanel {
         this.playerFire = new PlayerFire(this.playerSpaceship.getX()+Definitions.INCREASE_X,this.playerSpaceship.getY()+Definitions.INCREASE_Y);
         this.menuScene = new MenuScene();
         this.losingScene = new LosingScene();
+        this.winningScene = new WinningScene();
         this.level1Scene= new Level1Scene(this,this.playerSpaceship,this.enemySpaceship1,this.enemyFire1,
                 this.explosion,this.playerFire,this.background);
         this.level2Scene = new Level2Scene(this,this.playerSpaceship,this.enemySpaceship1,
@@ -88,7 +90,9 @@ public class GameScene extends JPanel {
             case Definitions.LOSING_SCENE:
                this.losingScene.paint(graphics);
                 break;
-
+            case Definitions.WINNING_SCENE:
+                this.winningScene.paint(graphics);
+                break;
         }
 
     }
@@ -163,6 +167,13 @@ public class GameScene extends JPanel {
                             this.enemyFire3.setAppears(false);
                             this.explosion.paint(this.getGraphics(),this);
                             this.sceneId = Definitions.LOSING_SCENE;
+                        }
+                        if (this.level2Scene.getEnemySpaceship2().getX() == Definitions.STARTING_X ||
+                                this.level2Scene.getEnemySpaceship3().getX() == Definitions.STARTING_X) {
+                            this.sceneId = Definitions.WINNING_SCENE;
+                        }
+                        if(!this.enemySpaceship2.isAppears()&& !this.enemySpaceship3.isAppears()){
+                            this.sceneId = Definitions.WINNING_SCENE;
                         }
                         break;
                 }
