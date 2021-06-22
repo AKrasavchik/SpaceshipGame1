@@ -179,7 +179,7 @@ public class GameScene extends JPanel {
                 }
                 repaint();
                 try {
-                    Thread.sleep(15);
+                    Thread.sleep(18);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
