@@ -23,10 +23,6 @@ public class PlayerFire {
         this.height = this.playerFire.getIconHeight();
     }
 
-    public Rectangle getBounds() {
-        return new Rectangle(x, y, width, height);
-    }
-
     public void move(Graphics graphics,GameScene gameScene) {
         if (this.x > 0 && this.x < Definitions.WINDOW_WIDTH) {
             this.playerFire.paintIcon(gameScene, graphics, this.x = x + 3, this.y);

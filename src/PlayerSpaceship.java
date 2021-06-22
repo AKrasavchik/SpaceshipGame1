@@ -27,10 +27,6 @@ public class PlayerSpaceship {
         this.height = this.playerSpaceship.getIconHeight();
     }
 
-    public Rectangle getBounds() {
-        return new Rectangle(x, y, width, height);
-    }
-
   public void paint (Graphics graphics, GameScene gameScene){
       this.playerSpaceship.paintIcon(gameScene,graphics,this.x,this.y);
   }
