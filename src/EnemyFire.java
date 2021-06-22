@@ -5,6 +5,8 @@ public class EnemyFire {
     private ImageIcon enemyFire;
     private int x;
     private int y;
+    private int width;
+    private int height;
     private boolean appears;
 
     public EnemyFire(int x, int y, ImageIcon enemyFire){
@@ -12,6 +14,16 @@ public class EnemyFire {
         this.x = x;
         this.y = y;
         this.appears = true;
+        getImageDimensions();
+    }
+    protected void getImageDimensions() {
+
+        this.width = this.enemyFire.getIconWidth();
+        this.height = this.enemyFire.getIconHeight();
+    }
+
+    public Rectangle getBounds() {
+        return new Rectangle(x, y, width, height);
     }
     public void moveLeft(Graphics graphics, GameScene gameScene){
         this.enemyFire.paintIcon(gameScene,graphics,this.x=x-4,this.y);

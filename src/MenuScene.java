@@ -11,9 +11,9 @@ public class MenuScene extends JPanel {
 
     public void paint(Graphics graphics){
         Graphics2D createGraphics = (Graphics2D) graphics;
-        createGraphics.setFont( new Font("Ariel", Font.BOLD, 50));
+        createGraphics.setFont( new Font("Ariel", Font.BOLD, Definitions.FONT_SIZE));
         createGraphics.setPaint( Color.WHITE );
-        createGraphics.drawString("To start game, press enter",200,600);
+        createGraphics.drawString("To start game, press enter",Definitions.DRAW_STRING_MENU_X,Definitions.DRAW_STRING_MENU_Y);
         createGraphics.dispose();
     }
 

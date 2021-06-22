@@ -6,6 +6,8 @@ public class PlayerFire {
     private ImageIcon playerFire;
     private int x;
     private int y;
+    private int width;
+    private int height;
     private boolean appears;
 
     public PlayerFire(int x,int y){
@@ -13,18 +15,25 @@ public class PlayerFire {
         this.x =x;
         this.y = y;
         this.appears = false;
+        getImageDimensions();
+    }
+    protected void getImageDimensions() {
+
+        this.width = this.playerFire.getIconWidth();
+        this.height = this.playerFire.getIconHeight();
+    }
+
+    public Rectangle getBounds() {
+        return new Rectangle(x, y, width, height);
     }
 
     public void move(Graphics graphics,GameScene gameScene) {
         if (this.x > 0 && this.x < Definitions.WINDOW_WIDTH) {
             this.playerFire.paintIcon(gameScene, graphics, this.x = x + 3, this.y);
-            //TODO: once the fire shot leaves the screen - eliminate its object
         }
     }
 
-    public void paint(Graphics graphics,GameScene gameScene) {
-          //  this.playerFire.paintIcon(gameScene, graphics, this.x, this.y);
-    }
+    public void paint(Graphics graphics,GameScene gameScene) {}
 
     public ImageIcon getPlayerFire() {
         return playerFire;

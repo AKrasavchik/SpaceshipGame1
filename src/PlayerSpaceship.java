@@ -7,6 +7,7 @@ public class PlayerSpaceship {
     private int y;
     private boolean alive;
     private int height;
+    private int width;
     private final int speed;
 
 
@@ -15,10 +16,20 @@ public class PlayerSpaceship {
         this.alive=true;
         this.height = height;
         this.y = Definitions.SPACESHIP_STARTING_POSITION;
-        this.speed=Definitions.PLAYER_SPEED;
+        this.speed=Definitions.SPACESHIP_SPEED;
+        getImageDimensions();
 
     }
 
+    protected void getImageDimensions() {
+
+        this.width = this.playerSpaceship.getIconWidth();
+        this.height = this.playerSpaceship.getIconHeight();
+    }
+
+    public Rectangle getBounds() {
+        return new Rectangle(x, y, width, height);
+    }
 
   public void paint (Graphics graphics, GameScene gameScene){
       this.playerSpaceship.paintIcon(gameScene,graphics,this.x,this.y);

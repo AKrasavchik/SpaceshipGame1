@@ -28,7 +28,7 @@ public class DefaultScene extends JPanel  {
 
     public void paint(Graphics graphics){
         super.paint(graphics);
-        this.background.paintIcon(this,graphics,0,0);
+        this.background.paintIcon(this,graphics,Definitions.STARTING_X,Definitions.STARTING_Y);
         if(this.playerSpaceship.isAlive()) {
             this.playerSpaceship.paint(graphics, this.gameScene);
         }

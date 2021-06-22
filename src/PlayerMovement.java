@@ -27,13 +27,13 @@ public class PlayerMovement implements KeyListener {
         int keyCode = e.getKeyCode();
         switch (keyCode) {
             case KeyEvent.VK_UP:
-                if (this.playerSpaceship.getY() - Definitions.PLAYER_HEIGHT + 40 >= Definitions.END_FRAME) {
+                if (this.playerSpaceship.getY() - Definitions.PLAYER_HEIGHT + Definitions.LIMIT_SPACESHIP_UP >= Definitions.END_SCREEN) {
                     this.playerSpaceship.move(Definitions.MOVE_UP);
                 }
                 break;
 
             case KeyEvent.VK_DOWN:
-                if (this.playerSpaceship.getY() - Definitions.PLAYER_HEIGHT - 510 <= Definitions.END_FRAME) {
+                if (this.playerSpaceship.getY() - Definitions.PLAYER_HEIGHT - Definitions.LIMIT_SPACESHIP_DOWN <= Definitions.END_SCREEN) {
                     this.playerSpaceship.move(Definitions.MOVE_DOWN);
                 }
                 break;

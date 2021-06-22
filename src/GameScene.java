@@ -35,7 +35,7 @@ public class GameScene extends JPanel {
         this.enemyFire3 = new EnemyFire(this.enemySpaceship3.getX(),Definitions.ENEMY_SPACESHIP_3_STARTING_POSITION+3,
                 new ImageIcon("images/enemyFire3.png"));
         this.explosion = new Explosion(playerSpaceship.getX(),playerSpaceship.getY());
-        this.playerFire = new PlayerFire(this.playerSpaceship.getX()+15,this.playerSpaceship.getY()+15);
+        this.playerFire = new PlayerFire(this.playerSpaceship.getX()+Definitions.INCREASE_X,this.playerSpaceship.getY()+Definitions.INCREASE_Y);
         this.menuScene = new MenuScene();
         this.losingScene = new LosingScene();
         this.level1Scene= new Level1Scene(this,this.playerSpaceship,this.enemySpaceship1,this.enemyFire1,
@@ -43,9 +43,9 @@ public class GameScene extends JPanel {
         this.level2Scene = new Level2Scene(this,this.playerSpaceship,this.enemySpaceship1,
                 this.enemySpaceship2,this.enemySpaceship3, this.enemyFire1,
                 this.enemyFire2,this.enemyFire3,this.explosion,this.playerFire,this.background);
-        this.playerFires = new PlayerFire[20];
+        this.playerFires = new PlayerFire[Definitions.MAX_PLAYER_FIRE_SHOOT];
         for (int i = 0; i < this.playerFires.length; i++) {
-            this.playerFires[i] = new PlayerFire(this.playerSpaceship.getX()+15,this.playerSpaceship.getY()+15);
+            this.playerFires[i] = new PlayerFire(this.playerSpaceship.getX()+Definitions.INCREASE_X,this.playerSpaceship.getY()+Definitions.INCREASE_Y);
         }
         this.add(level1Scene);
         this.add(level2Scene);
@@ -74,7 +74,7 @@ public class GameScene extends JPanel {
 
     public void paint (Graphics graphics) {
         super.paint(graphics);
-        this.background.paintIcon(this,graphics,0,0);
+        this.background.paintIcon(this,graphics,Definitions.STARTING_X,Definitions.STARTING_Y);
         switch (this.sceneId){
             case Definitions.MENU_SCENE:
                 this.menuScene.paint(graphics);
@@ -93,19 +93,38 @@ public class GameScene extends JPanel {
 
     }
 
-    public boolean collisionWithPlayerFire (){
-        Rectangle enemyRectangle = new Rectangle(this.enemySpaceship1.getX(),
-                enemySpaceship1.getY(),100,100);
-        Rectangle playerFireRectangle = new Rectangle(playerFire.getX(),
-                playerFire.getY(),45,45);
-        boolean collision = enemyRectangle.intersects(playerFireRectangle);
-        return collision;
-    }
+
+ public void collisionWithPlayerFire () {
+     for (PlayerFire fire : playerFires) {
+         Rectangle fireRectangle = new Rectangle(fire.getX(), fire.getY(), Definitions.PLAYER_FIRE_WIDTH, Definitions.PLAYER_FIRE_HEIGHT);
+         if (this.sceneId == Definitions.LEVEL_1_SCENE) {
+             Rectangle enemyRectangle = new Rectangle(this.enemySpaceship1.getX(),
+                     this.enemySpaceship1.getY(), Definitions.ENEMY_SPACESHIP_WIDTH, Definitions.ENEMY_SPACESHIP_HEIGHT);
+             if (fireRectangle.intersects(enemyRectangle)) {
+                 this.enemySpaceship1.setAppears(false);
+                 this.sceneId = Definitions.LEVEL_2_SCENE;
+             }
+         }
+         else if(this.sceneId == Definitions.LEVEL_2_SCENE) {
+             Rectangle enemyRectangle2 = new Rectangle(this.enemySpaceship2.getX(),
+                     this.enemySpaceship2.getY(), Definitions.ENEMY_SPACESHIP_WIDTH, Definitions.ENEMY_SPACESHIP_HEIGHT);
+             Rectangle enemyRectangle3 = new Rectangle(this.enemySpaceship3.getX(),
+                     this.enemySpaceship3.getY(), Definitions.ENEMY_SPACESHIP_WIDTH, Definitions.ENEMY_SPACESHIP_HEIGHT);
+             if (fireRectangle.intersects(enemyRectangle2)) {
+                 this.enemySpaceship2.setAppears(false);
+             }
+             if (fireRectangle.intersects(enemyRectangle3)) {
+                 this.enemySpaceship3.setAppears(false);
+             }
+         }
+     }
+ }
+
+
 
     private void mainGameLoop() {
         new Thread(() -> {
             while (true) {
-                int counter = 0;
                 switch (this.sceneId) {
                     case Definitions.LEVEL_1_SCENE:
                         enemySpaceship1.moveLeft(this.getGraphics(), this);
@@ -115,22 +134,16 @@ public class GameScene extends JPanel {
                                 fire.move(this.getGraphics(),this);
                             }
                         }
-                        if(collisionWithPlayerFire()){
-                            System.out.println("collision!!");
-                            this.enemySpaceship1.setAppears(false);
-                           // counter++;
-                        }
-                       /* if(counter == 3){
-                            this.enemySpaceship1.setAppears(false);
-                        }*/
+                        collisionWithPlayerFire();
                         if (this.level1Scene.collision(playerSpaceship, this.level1Scene.getEnemySpaceship(), this.level1Scene.getEnemyFire())) {
                             this.playerSpaceship.setAlive(false);
                             this.enemyFire1.setAppears(false);
                             this.explosion.paint(this.getGraphics(),this);
                             this.sceneId = Definitions.LOSING_SCENE;
                         }
-                       if (this.level1Scene.getEnemySpaceship().getX() == 0 )
+                       if (this.level1Scene.getEnemySpaceship().getX() == Definitions.STARTING_X) {
                            this.sceneId = Definitions.LEVEL_2_SCENE;
+                       }
                         break;
                     case Definitions.LEVEL_2_SCENE:
                         enemySpaceship2.moveLeft(this.getGraphics(),this);
@@ -142,6 +155,7 @@ public class GameScene extends JPanel {
                                 fire.move(this.getGraphics(), this);
                             }
                         }
+                        collisionWithPlayerFire();
                         if(this.level2Scene.collision(playerSpaceship,this.enemySpaceship2,this.enemySpaceship3,
                                 this.enemyFire2,this.enemyFire3)){
                             this.playerSpaceship.setAlive(false);

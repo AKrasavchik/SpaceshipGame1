@@ -5,6 +5,8 @@ public class EnemySpaceship {
     private ImageIcon enemySpaceship;
     int x;
     int y;
+    private int height;
+    private int width;
     private boolean appears;
 
     public EnemySpaceship(int x, int y,ImageIcon enemySpaceship){
@@ -12,13 +14,24 @@ public class EnemySpaceship {
         this.x = x;
         this.y = y;
         this.appears = true;
+        getImageDimensions();
+    }
+    protected void getImageDimensions() {
+
+        this.width = this.enemySpaceship.getIconWidth();
+        this.height = this.enemySpaceship.getIconHeight();
     }
 
+    public Rectangle getBounds() {
+        return new Rectangle(x, y, width, height);
+    }
     public void moveLeft(Graphics graphics, GameScene gameScene){
+        if(this.isAppears())
         this.enemySpaceship.paintIcon(gameScene,graphics,this.x=x-2,this.y);
     }
 
     public void paint (Graphics graphics, GameScene gameScene){
+            if(this.isAppears())
             this.enemySpaceship.paintIcon(gameScene, graphics, this.x, this.y);
 
     }
